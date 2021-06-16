@@ -13,6 +13,7 @@ RetentionInDays=x
 # Debug Mode
 DEBUGMODE="0"
 DRY_RUN=$1
+AWS_NO_CHECK=1
 
 # Functions
 
@@ -47,26 +48,27 @@ function pause(){
 	echo
 }
 
-# Verify AWS CLI Credentials are setup
-# http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
-if ! grep -q aws_access_key_id ~/.aws/config; then
-	if ! grep -q aws_access_key_id ~/.aws/credentials; then
-		fail "AWS config not found or CLI not installed. Please run \"aws configure\"."
-	fi
-fi
 
-# Check for AWS CLI profile argument passed into the script
-# http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-multiple-profiles
-if [ $# -eq 0 ]; then
-	scriptname=`basename "$0"`
-	echo "Usage: ./$scriptname profile"
-	echo "Where profile is the AWS CLI profile name"
-	echo "Using default profile"
-	echo
-	profile=default
-else
-	profile=$1
-fi
+# # Verify AWS CLI Credentials are setup
+# # http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
+# if ! grep -q aws_access_key_id ~/.aws/config; then
+# 	if ! grep -q aws_access_key_id ~/.aws/credentials; then
+# 		fail "AWS config not found or CLI not installed. Please run \"aws configure\"."
+# 	fi
+# fi
+
+# # Check for AWS CLI profile argument passed into the script
+# # http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-multiple-profiles
+# if [ $# -eq 0 ]; then
+# 	scriptname=`basename "$0"`
+# 	echo "Usage: ./$scriptname profile"
+# 	echo "Where profile is the AWS CLI profile name"
+# 	echo "Using default profile"
+# 	echo
+# 	profile=default
+# else
+# 	profile=$1
+# fi
 
 # Check required commands
 check_command "aws"
